@@ -53,6 +53,7 @@ export default function ColorTabs() {
           textColor="secondary"
           indicatorColor="secondary"
           aria-label="secondary tabs example"
+          sx={{ width: "20vw" }}
         >
           <Tab label="File Upload" {...a11yProps(0)} />
           <Tab label="Paste PGN" {...a11yProps(1)} />
