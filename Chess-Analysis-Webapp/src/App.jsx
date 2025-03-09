@@ -10,7 +10,9 @@ function App() {
   return (
     <>
       <h1>Chess Analysis</h1>
-      <ColorTabs></ColorTabs>
+      <div id="tabs">
+        <ColorTabs></ColorTabs>
+      </div>
     </>
   )
 }
