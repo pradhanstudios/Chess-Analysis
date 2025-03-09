@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import InputFileUpload from './MUI-FileUploadButton';
 import MultilineTextFields from './MUI-MultilineText';
+import Button from '@mui/material/Button';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,6 +63,7 @@ export default function ColorTabs() {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <MultilineTextFields></MultilineTextFields>
+        <Button variant="contained">Submit</Button>
       </CustomTabPanel>
     </Box>
   );
