@@ -6,7 +6,7 @@ export default function MultilineTextFields() {
   return (
     <Box
       component="form"
-      sx={{ '& .MuiTextField-root': { m: 1, width: '25ch', textarea: {color: 'white'} }}}
+      sx={{ '& .MuiTextField-root': { m: 1, width: '35ch', textarea: {color: 'white'}, '& .MuiInputBase-root': { minHeight: '300px', alignItems: 'baseline' } }}}
       noValidate
       autoComplete="off"
     >
