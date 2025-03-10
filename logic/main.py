@@ -1,4 +1,5 @@
 from parse import parse_pgn
+from analyze import analyze
 
 TEST_PGN = """[Event "State Ch."]
 [Site "New York, USA"]
@@ -15,4 +16,7 @@ TEST_PGN = """[Event "State Ch."]
 """
 
 if __name__ == "__main__":
-    print(parse_pgn(TEST_PGN))
+    pgn = parse_pgn(TEST_PGN)
+    print(analyze(pgn))
+
+    
