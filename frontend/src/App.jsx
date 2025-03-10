@@ -1,26 +1,26 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import ColorTabs from './components/MUI-ColorTabs'
+import axios from 'axios';
 
 function App() {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
+  const endpoint = `${import.meta.env.VITE_API_URL}/posts/`;
+
+  const fetchData = async () => {
+    console.log(endpoint);
+    console.log('fetching...');
+
+    const response = axios.get(endpoint);
+    console.log(response);
+
+    const { data } = response;
+    console.log(data);
+
+    return data;
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      console.log(import.meta.env.VITE_API_URL)
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}posts`);
-        if (!response.ok) {
-          throw new Error('Network response NOT OK');
-        }
-        const result = await response.json();
-        console.log(result);
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-
     fetchData();
   }, [])
 
