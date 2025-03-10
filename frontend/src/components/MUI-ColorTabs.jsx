@@ -63,8 +63,7 @@ export default function ColorTabs() {
         <InputFileUpload></InputFileUpload>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MultilineTextFields></MultilineTextFields>
-        <Button variant="contained">Submit</Button>
+        <MultilineTextFields />
       </CustomTabPanel>
     </Box>
   );

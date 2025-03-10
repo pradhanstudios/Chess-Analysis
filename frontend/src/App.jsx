@@ -1,11 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 import ColorTabs from './components/MUI-ColorTabs'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      console.log(import.meta.env.VITE_API_URL)
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}posts`);
+        if (!response.ok) {
+          throw new Error('Network response NOT OK');
+        }
+        const result = await response.json();
+        console.log(result);
+        setData(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+  }, [])
 
   return (
     <>
