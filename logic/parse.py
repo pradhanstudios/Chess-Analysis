@@ -1,3 +1,4 @@
+from constants import *
 
 def _remove_non_letters(string: str) -> str:
     output = ""
@@ -32,11 +33,11 @@ def parse_pgn(pgn: str) -> dict:
 
         if (not in_moves) and (info == "1."):
             in_moves = True
-            parsed_pgn["moves"] = []
+            parsed_pgn[MOVES] = []
 
         if in_moves and ("." not in info):
-            parsed_pgn["moves"].append(info)
+            parsed_pgn[MOVES].append(info)
             
-    parsed_pgn["outcome"] = parsed_pgn["moves"].pop()
+    parsed_pgn["Result"] = parsed_pgn[MOVES].pop()
 
     return parsed_pgn
