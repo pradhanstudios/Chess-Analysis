@@ -40,17 +40,17 @@ function a11yProps(index) {
 
 export default function ColorTabs() {
   const [value, setValue] = React.useState(0);
-  const [array, setArray] = useState([]);
+  // const [array, setArray] = useState([]);
 
-  const fetchAPI = async () => {
-    const response = await axios.get("http://127.0.0.1:8000/api/users");
-    console.log(response.data.users);
-    setArray(response.data.users);
-  }
+  // const fetchAPI = async () => {
+  //   const response = await axios.get("http://127.0.0.1:8000/api/form");
+  //   console.log(response.data.data);
+  //   setArray(response.data.data);
+  // }
 
-  useEffect(() => {
-    fetchAPI();
-  }, [])
+  // useEffect(() => {
+  //   fetchAPI();
+  // }, [])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -74,11 +74,6 @@ export default function ColorTabs() {
       </Box>
       <CustomTabPanel value={value} index={0}>
         <InputFileUpload></InputFileUpload>
-        <p>
-          {array.map((user, index) => (
-            <><span key={index}>{user}</span><br></br></>
-          ))}
-        </p>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <MultilineTextFields />

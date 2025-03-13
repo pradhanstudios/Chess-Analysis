@@ -6,24 +6,45 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 
 export default function MultilineTextFields() {
-  const [inputData, setInputData] = useState('');
+  const [formData, setFormData] = useState('');
+  const [receivedData, setReceivedData] = useState(null);
 
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch('http://127.0.0.1:8000/api/form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ data: inputData }),
-      });
+  const handleChange = (e) => {
+    setFormData({ ...formData, "data": e.target.value });
+  };
 
-      const result = await response.json();
-      console.log(result);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    } catch (error) {
-      console.error('Error', error);
+    const response = await fetch('http://127.0.0.1:8000/api/form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pgn: formData }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.data) {
+      setReceivedData(data.data);
+    } else {
+      setReceivedData({ message: data.message || "Error submitting data" });
     }
+
+    // try {
+    //   const response = await fetch('http://127.0.0.1:8000/api/form', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ data: formData }),
+    //   });
+
+    //   const result = await response.json();
+    //   console.log(result);
+
+    // } catch (error) {
+    //   console.error('Error', error);
+    // }
   };
 
   return (
@@ -37,13 +58,21 @@ export default function MultilineTextFields() {
         <TextField
           id="outlined-textarea"
           label=""
+          value={formData.pgn}
           placeholder="Paste PGN here"
           required={true}
           multiline
-          onChange={(e) => setInputData(e.target.value)}
+          onChange={handleChange}
         />
       </div>
       <Button type="submit" variant="contained" onClick={handleSubmit}>Submit</Button>
+
+      {receivedData && (
+        <div>
+          <h2>Received Data:</h2>
+          <pre>{JSON.stringify(receivedData, null, 2)}</pre>
+        </div>
+      )}
     </Box>
   );
 }
