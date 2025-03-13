@@ -1,21 +1,21 @@
 from constants import *
 
 def is_blunder(evaluation: int, optimal_evaluation: int, turn: int) -> bool:
-    return (optimal_evaluation - evaluation*turn) >= 200
+    return (optimal_evaluation - evaluation) >= 200 if turn == WHITE else (evaluation - optimal_evaluation) >= 200
 
 def is_mistake(evaluation: int, optimal_evaluation: int, turn: int) -> bool:
-    return (optimal_evaluation - evaluation*turn) >= 100
+    return (optimal_evaluation - evaluation) >= 100 if turn == WHITE else (evaluation - optimal_evaluation) >= 100
     
 def is_good(evaluation: int, optimal_evaluation: int, turn: int) -> bool:
-    return (optimal_evaluation - evaluation*turn) >= 50
+    return (optimal_evaluation - evaluation) >= 50 if turn == WHITE else (evaluation - optimal_evaluation) >= 50
 
 def is_excellent(evaluation: int, optimal_evaluation: int, turn: int) -> bool:
-    return (optimal_evaluation - evaluation*turn) > 0 
-    
-def is_perfect(evaluation: int, optimal_evaluation: int, turn: int) -> bool:
-    return evaluation >= (optimal_evaluation*turn)
+    return (optimal_evaluation - evaluation) > -100000 if turn == WHITE else (evaluation - optimal_evaluation) > -100000
 
-def get_move_type(evaluation: int, optimal_evaluation: int, turn: int) -> str:
+def get_move_type(move: str, best_move: str, evaluation: int, optimal_evaluation: int, turn: int) -> str:
+    if move == best_move:
+        return PERFECT
+
     # it is now mate-in-x against you, which was not necessary
     if evaluation == None and optimal_evaluation != None:
         return BLUNDER
@@ -38,9 +38,6 @@ def get_move_type(evaluation: int, optimal_evaluation: int, turn: int) -> str:
         
     if is_excellent(evaluation, optimal_evaluation, turn):
         return EXCELLENT
-        
-    if is_perfect(evaluation, optimal_evaluation, turn):
-        return PERFECT
     
     return "ERR"
         
