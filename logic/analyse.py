@@ -28,7 +28,7 @@ def analyse(pgn: dict) -> dict:
             book_moves = False
             move_type = get_move_type(move, str(best_move), evaluation, optimal_evaluation, turn)
             
-        pgn[MOVES][i] = f"{move} {evaluation} {best_move} {optimal_evaluation} {move_type} {turn}"
+        pgn[MOVES][i] = f"{move} {evaluation} {best_move} {optimal_evaluation} {move_type}"
         turn *= -1
 
     engine.close()
