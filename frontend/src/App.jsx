@@ -5,24 +5,24 @@ import axios from 'axios';
 
 function App() {
   // const [data, setData] = useState([]);
-  const endpoint = `${import.meta.env.VITE_API_URL}/posts/`;
+  // const endpoint = `${import.meta.env.VITE_API_URL}/posts/`;
 
-  const fetchData = async () => {
-    console.log(endpoint);
-    console.log('fetching...');
+  // const fetchData = async () => {
+  //   console.log(endpoint);
+  //   console.log('fetching...');
 
-    const response = axios.get(endpoint);
-    console.log(response);
+  //   const response = axios.get(endpoint);
+  //   console.log(response);
 
-    const { data } = response;
-    console.log(data);
+  //   const { data } = response;
+  //   console.log(data);
 
-    return data;
-  }
+  //   return data;
+  // }
 
-  useEffect(() => {
-    fetchData();
-  }, [])
+  // useEffect(() => {
+  //   fetchData();
+  // }, [])
 
   return (
     <>
