@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -6,6 +7,7 @@ import Box from '@mui/material/Box';
 import InputFileUpload from './MUI-FileUploadButton';
 import MultilineTextFields from './MUI-MultilineText';
 import Button from '@mui/material/Button';
+import axios from 'axios';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -38,6 +40,17 @@ function a11yProps(index) {
 
 export default function ColorTabs() {
   const [value, setValue] = React.useState(0);
+  // const [array, setArray] = useState([]);
+
+  // const fetchAPI = async () => {
+  //   const response = await axios.get("http://127.0.0.1:8000/api/form");
+  //   console.log(response.data.data);
+  //   setArray(response.data.data);
+  // }
+
+  // useEffect(() => {
+  //   fetchAPI();
+  // }, [])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,8 +76,7 @@ export default function ColorTabs() {
         <InputFileUpload></InputFileUpload>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MultilineTextFields></MultilineTextFields>
-        <Button variant="contained">Submit</Button>
+        <MultilineTextFields />
       </CustomTabPanel>
     </Box>
   );
