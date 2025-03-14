@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, render_template, request, url_for, redirect
 from flask_cors import CORS
+from logic.parse import parse_pgn
+from logic.analyse import analyse
 
 app = Flask(__name__)
 cors = CORS(app, origins="*")
@@ -34,12 +36,14 @@ def form():
         form_data = request.get_json()
         print(request.get_json())
         # Process or store form_data here
+        pgn = parse_pgn(form_data["pgn"]["data"])
+        print(analyse(pgn))
 
         # {'pgn': {'data': 'test'}}
         output = form_data["pgn"]["data"]
         print(output)
 
-        return jsonify({"message": "Data received", "data": output})
+        return jsonify({"message": "Data received", "data": pgn})
 
     return jsonify({"message": "No data received"}), 400
 

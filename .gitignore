@@ -76,3 +76,6 @@ Thumbs.db
 *.swo
 *.sublime-project
 *.sublime-workspace
+
+Stockfish
+baron30.bin
