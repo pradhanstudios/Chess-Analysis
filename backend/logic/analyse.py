@@ -1,15 +1,15 @@
 import chess
 import chess.engine
 import chess.polyglot
-from constants import *
-from move_types import get_move_type
+from .constants import *
+from .move_types import get_move_type
 
 
 def analyse(pgn: dict) -> dict:
     board = chess.Board()
-    opening_book = chess.polyglot.open_reader("baron30.bin")
+    opening_book = chess.polyglot.open_reader("logic/baron30.bin")
     # have stockfish the same directory
-    engine = chess.engine.SimpleEngine.popen_uci("Stockfish/src/stockfish")
+    engine = chess.engine.SimpleEngine.popen_uci("logic/Stockfish/src/stockfish")
     analysis_limit = chess.engine.Limit(time=TIME_TO_ANALYSE_PER_MOVE / 3, depth=MAX_DEPTH_PER_MOVE)
     turn = WHITE
     book_moves = True

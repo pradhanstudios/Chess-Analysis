@@ -1,4 +1,4 @@
-from constants import *
+from .constants import *
 
 def is_blunder(evaluation: int, optimal_evaluation: int, turn: int) -> bool:
     return (optimal_evaluation - evaluation) >= 200 if turn == WHITE else (evaluation - optimal_evaluation) >= 200

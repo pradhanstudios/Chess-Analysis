@@ -1,4 +1,4 @@
-from constants import *
+from .constants import *
 
 def _remove_non_letters(string: str) -> str:
     output = ""
