@@ -22,11 +22,6 @@ function App() {
       <div id="tabs">
         <ColorTabs></ColorTabs>
       </div>
-      <p>
-        {array.map((users, index) => (
-          <><span key={index}>{users}</span><br></br></>
-        ))}
-      </p>
     </>
   )
 }
