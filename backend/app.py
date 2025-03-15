@@ -38,12 +38,18 @@ def form():
 @app.route("/api/upload", methods=["POST"])
 def upload():
     if request.method == "POST":
-        form_data = request.get_data()
-        print(form_data)
+        form_data = request.get_data().decode()
+        filename = form_data.split()[4][10:-1]
+        if not filename.endswith(".pgn"):
+            return jsonify({"message": "Not a PGN file"}), 400
 
-        # pgn = parse_pgn(form_data)
+        pgn = "\n".join(form_data.split("\n")[4:-2])
+        # print(pgn)
+        pgn = parse_pgn(pgn)
+        pgn = analyse(pgn)
+        print(pgn)
 
-        return jsonify({"message": "Data received"}), 200
+        return jsonify({"message": "Data received", "data": pgn})
 
     return jsonify({"message": "No data received"}), 400
 
