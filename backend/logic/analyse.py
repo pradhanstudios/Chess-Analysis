@@ -32,4 +32,5 @@ def analyse(pgn: dict) -> dict:
         turn *= -1
 
     engine.close()
+    opening_book.close()
     return pgn
