@@ -26,22 +26,20 @@ export default function InputFileUpload(handleFile) {
     };
 
     const handleUpload = () => {
-        const fd = new FormData();
-        for (var key of fd.entries()) {
-            console.log(key[0] + ', ' + key[1]);
-        }
-        fd.append('file', file);
+        const data = new FormData();
+        data.append('file', file);
 
-        for (var key of fd.entries()) {
+        console.log(file);
+
+        for (var key of data.entries()) {
             console.log(key[0] + ', ' + key[1]);
             console.log(key[1]);
         }
 
-        console.log(file);
 
-        fetch('http://127.0.0.1:8000/api/form', {
+        fetch('http://127.0.0.1:8000/api/upload', {
             method: "POST",
-            body: fd
+            body: data
         })
             .then(res => res.json())
             .then(data => console.log(data));

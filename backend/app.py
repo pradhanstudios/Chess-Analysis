@@ -12,20 +12,7 @@ def hello_world():
     return "Hello, World!"
 
 
-@app.route("/api/users", methods=["GET"])
-def users():
-    return jsonify(
-        {
-            "users": [
-                "george",
-                "bill",
-                "billy",
-            ]
-        }
-    )
-
-
-@app.route("/api/form", methods=["GET", "POST"])
+@app.route("/api/form", methods=["POST"])
 def form():
     # if request.method == "POST":
     #     data = request.get_json()
@@ -44,6 +31,19 @@ def form():
         print(output)
 
         return jsonify({"message": "Data received", "data": pgn})
+
+    return jsonify({"message": "No data received"}), 400
+
+
+@app.route("/api/upload", methods=["POST"])
+def upload():
+    if request.method == "POST":
+        form_data = request.get_data()
+        print(form_data)
+
+        # pgn = parse_pgn(form_data)
+
+        return jsonify({"message": "Data received"}), 200
 
     return jsonify({"message": "No data received"}), 400
 
