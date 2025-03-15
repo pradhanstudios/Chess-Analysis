@@ -29,14 +29,6 @@ export default function InputFileUpload(handleFile) {
         const data = new FormData();
         data.append('file', file);
 
-        console.log(file);
-
-        for (var key of data.entries()) {
-            console.log(key[0] + ', ' + key[1]);
-            console.log(key[1]);
-        }
-
-
         fetch('http://127.0.0.1:8000/api/upload', {
             method: "POST",
             body: data
