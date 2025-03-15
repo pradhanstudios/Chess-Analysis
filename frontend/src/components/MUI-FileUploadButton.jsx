@@ -20,21 +20,28 @@ const VisuallyHiddenInput = styled('input')({
 
 export default function InputFileUpload(handleFile) {
     const [file, setFile] = useState(null);
+    const [receivedData, setReceivedData] = useState(null);
 
     const handleChange = (event) => {
         setFile(event.target.files[0]);
     };
 
-    const handleUpload = () => {
-        const data = new FormData();
-        data.append('file', file);
+    const handleUpload = async () => {
+        const fd = new FormData();
+        fd.append('file', file);
 
-        fetch('http://127.0.0.1:8000/api/upload', {
+        const response = await fetch('http://127.0.0.1:8000/api/upload', {
             method: "POST",
-            body: data
-        })
-            .then(res => res.json())
-            .then(data => console.log(data));
+            body: fd
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.data) {
+            setReceivedData(data.data);
+        } else {
+            setReceivedData({ message: data.message || "Error submitting data" });
+        }
     };
 
     return (
@@ -64,6 +71,12 @@ export default function InputFileUpload(handleFile) {
                 Upload file
             </Button>
             {file && <p>{file.name}</p>}
+            {receivedData && (
+                <div>
+                    <h2>Received Data:</h2>
+                    <pre>{JSON.stringify(receivedData, null, 2)}</pre>
+                </div>
+            )}
         </>
     );
 }
