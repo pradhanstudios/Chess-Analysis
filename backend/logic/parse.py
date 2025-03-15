@@ -1,4 +1,5 @@
 from .constants import *
+from chess.pgn import read_game
 
 def _remove_non_letters(string: str) -> str:
     output = ""
@@ -9,6 +10,11 @@ def _remove_non_letters(string: str) -> str:
     return output
 
 def parse_pgn(pgn: str) -> dict:
+    try:
+        read_game(pgn)
+    except:
+        return {}
+    
     pgn = pgn.split()
     parsed_pgn = dict()
     # print(pgn)

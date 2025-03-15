@@ -34,14 +34,17 @@ def form():
 
     if request.method == "POST":
         form_data = request.get_json()
-        print(request.get_json())
+        # print(request.get_json())
         # Process or store form_data here
         pgn = parse_pgn(form_data["pgn"]["data"])
+        if not pgn:
+            return jsonify({"message": "Invalid PGN", "data": "Invalid PGN"}), 400
+        
         print(analyse(pgn))
 
-        # {'pgn': {'data': 'test'}}
-        output = form_data["pgn"]["data"]
-        print(output)
+        # # {'pgn': {'data': 'test'}}
+        # output = form_data["pgn"]["data"]
+        # print(output)
 
         return jsonify({"message": "Data received", "data": pgn})
 
