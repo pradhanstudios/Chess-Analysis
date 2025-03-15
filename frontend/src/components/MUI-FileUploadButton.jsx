@@ -1,7 +1,9 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react'
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import axios from 'axios';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -15,21 +17,53 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-export default function InputFileUpload() {
+
+export default function InputFileUpload(handleFile) {
+    const [file, setFile] = useState(null);
+
+    const handleChange = (event) => {
+        setFile(event.target.files[0]);
+    };
+
+    const handleUpload = () => {
+        const data = new FormData();
+        data.append('file', file);
+
+        fetch('http://127.0.0.1:8000/api/upload', {
+            method: "POST",
+            body: data
+        })
+            .then(res => res.json())
+            .then(data => console.log(data));
+    };
+
     return (
-        <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-        >
-            Upload files
-            <VisuallyHiddenInput
-                type="file"
-                onChange={(event) => console.log(event.target.files)}
-                multiple
-            />
-        </Button>
+        <>
+            <Button
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}
+                startIcon={<CloudUploadIcon />}
+            >
+                Choose PGN file
+                <VisuallyHiddenInput
+                    type="file"
+                    onChange={handleChange}
+                    multiple
+                />
+            </Button>
+
+            <Button
+                component="label"
+                role={undefined}
+                variant='contained'
+                tabIndex={-1}
+                onClick={handleUpload}
+            >
+                Upload file
+            </Button>
+            {file && <p>{file.name}</p>}
+        </>
     );
 }
