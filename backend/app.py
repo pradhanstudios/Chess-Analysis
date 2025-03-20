@@ -21,14 +21,20 @@ def form():
 
     if request.method == "POST":
         form_data = request.get_json()
-        print(request.get_json())
+        # print(request.get_json())
         # Process or store form_data here
         pgn = parse_pgn(form_data["pgn"]["data"])
-        print(analyse(pgn))
+        if not pgn:
+            return jsonify({"message": "Invalid PGN", "data": "Invalid PGN"}), 400
+        
+        try:
+            print(analyse(pgn))
+        except:
+            return jsonify({"message": "Invalid PGN"}), 400
 
-        # {'pgn': {'data': 'test'}}
-        output = form_data["pgn"]["data"]
-        print(output)
+        # # {'pgn': {'data': 'test'}}
+        # output = form_data["pgn"]["data"]
+        # print(output)
 
         return jsonify({"message": "Data received", "data": pgn})
 
@@ -40,14 +46,21 @@ def upload():
     if request.method == "POST":
         form_data = request.get_data().decode()
         filename = form_data.split()[4][10:-1]
+        if not filename:
+            return jsonify({"message": "Please input a file"}), 400
+        
         if not filename.endswith(".pgn"):
             return jsonify({"message": "Not a PGN file"}), 400
+        
 
         pgn = "\n".join(form_data.split("\n")[4:-2])
-        # print(pgn)
+        print("Starting analysis")
         pgn = parse_pgn(pgn)
-        pgn = analyse(pgn)
-        print(pgn)
+        # print(pgn)
+        try:
+            print(analyse(pgn))
+        except:
+            return jsonify({"message": "Invalid PGN"}), 400
 
         return jsonify({"message": "Data received", "data": pgn})
 

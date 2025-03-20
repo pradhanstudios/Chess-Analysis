@@ -4,7 +4,7 @@ import chess.polyglot
 from .constants import *
 from .move_types import get_move_type
 
-
+# modifies the pgn in place as well as returning it
 def analyse(pgn: dict) -> dict:
     board = chess.Board()
     opening_book = chess.polyglot.open_reader("logic/baron30.bin")
