@@ -54,8 +54,6 @@ function GameDisplay({ pgn }) {
             var prev_fen = tmp.fen();
             tmp.move(moves[prev]);
             addToFuture(tmp.fen());
-            console.log(future);
-            console.log(future.length);
 
             setFen(prev_fen);
             setCurrentMove(currentMove - 1);
@@ -74,10 +72,9 @@ function GameDisplay({ pgn }) {
             {game ? (
                 <div>
                     <Chessboard id="BasicBoard" position={fen} boardWidth={600} />
-                    <p>{currentMove} / {game.history().length}</p>
+                    <p>Move: {currentMove} / {game.history().length}</p>
                     <button onClick={goToPreviousMove} disabled={currentMove === 0}>Previous Move</button>
                     <button onClick={goToNextMove} disabled={currentMove === game.history().length}>Next Move</button>
-                    <p>{fen}</p>
                 </div>
             ) : (
                 <p>Loading game...</p>

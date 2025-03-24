@@ -57,7 +57,7 @@ def upload():
         parsed_pgn = parse_pgn(pgn)
         # print(pgn)
         try:
-            print(analyse(parsed_pgn))
+            analyse(parsed_pgn)
         except:
             return jsonify({"message": "Invalid PGN"}), 400
 
