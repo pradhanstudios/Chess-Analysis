@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import LoadingBar from "react-top-loading-bar";
 import axios from 'axios';
 
 const VisuallyHiddenInput = styled('input')({
@@ -21,12 +22,14 @@ const VisuallyHiddenInput = styled('input')({
 export default function InputFileUpload(handleFile) {
     const [file, setFile] = useState(null);
     const [receivedData, setReceivedData] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (event) => {
         setFile(event.target.files[0]);
     };
 
     const handleUpload = async () => {
+        setLoading(true);
         const fd = new FormData();
         fd.append('file', file);
 
@@ -42,6 +45,7 @@ export default function InputFileUpload(handleFile) {
         } else {
             setReceivedData({ message: data.message || "Error submitting data" });
         }
+        setLoading(false);
     };
 
     return (
@@ -71,6 +75,15 @@ export default function InputFileUpload(handleFile) {
                 Upload file
             </Button>
             {file && <p>{file.name}</p>}
+            {loading && (
+                <>
+                <p>Processing Data</p>
+                <LoadingBar
+                    color="#f11946"
+                    progress={85}
+                />
+                </>
+            )}
             {receivedData && (
                 <div>
                     <h2>Received Data:</h2>

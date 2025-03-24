@@ -3,17 +3,20 @@ import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import LoadingBar from "react-top-loading-bar";
 import axios from 'axios';
 
 export default function MultilineTextFields() {
   const [formData, setFormData] = useState('');
   const [receivedData, setReceivedData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, "data": e.target.value });
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     const response = await fetch('http://127.0.0.1:8000/api/form', {
@@ -29,6 +32,7 @@ export default function MultilineTextFields() {
     } else {
       setReceivedData({ message: data.message || "Error submitting data" });
     }
+    setLoading(false);
   };
 
   return (
@@ -50,7 +54,15 @@ export default function MultilineTextFields() {
         />
       </div>
       <Button type="submit" variant="contained" onClick={handleSubmit}>Submit</Button>
-
+      {loading && (
+          <>
+          <p>Processing Data</p>
+          <LoadingBar
+              color="#f11946"
+              progress={85}
+          />
+          </>
+      )}
       {receivedData && (
         <div>
           <h2>Received Data:</h2>
