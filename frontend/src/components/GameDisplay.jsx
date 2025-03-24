@@ -41,7 +41,9 @@ function GameDisplay({ pgn }) {
         }
     };
 
-    const goToPreviousMove = () => {
+    const goToPreviousMove = (e) => {
+        e.preventDefault();
+
         if (game && currentMove > 0) {
             var moves = game.history();
             var tmp = new Chess();
@@ -60,7 +62,9 @@ function GameDisplay({ pgn }) {
         }
     };
 
-    const goToNextMove = () => {
+    const goToNextMove = (e) => {
+        e.preventDefault();
+
         if (game && currentMove < game.history().length) {
             setFen(popFromFuture());
             setCurrentMove(currentMove + 1);

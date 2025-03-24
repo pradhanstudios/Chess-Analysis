@@ -4,10 +4,12 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import GameDisplay from './GameDisplay'
 
 export default function MultilineTextFields() {
   const [formData, setFormData] = useState('');
   const [receivedData, setReceivedData] = useState(null);
+  const [originalPGN, setOriginalPGN] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, "data": e.target.value });
@@ -26,6 +28,7 @@ export default function MultilineTextFields() {
 
     if (response.ok && data.data) {
       setReceivedData(data.data);
+      setOriginalPGN(data.original);
     } else {
       setReceivedData({ message: data.message || "Error submitting data" });
     }
@@ -55,6 +58,13 @@ export default function MultilineTextFields() {
         <div>
           <h2>Received Data:</h2>
           <pre>{JSON.stringify(receivedData, null, 2)}</pre>
+        </div>
+      )}
+      {originalPGN && (
+        <div>
+          <h2>PGN:</h2>
+          {/* <pre>{JSON.stringify(originalPGN, null, 2)}</pre> */}
+          <GameDisplay pgn={originalPGN} />
         </div>
       )}
     </Box>

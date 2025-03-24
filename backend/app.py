@@ -23,20 +23,22 @@ def form():
         form_data = request.get_json()
         # print(request.get_json())
         # Process or store form_data here
-        pgn = parse_pgn(form_data["pgn"]["data"])
-        if not pgn:
+        pgn = form_data["pgn"]["data"]
+        parsed_pgn = parse_pgn(pgn)
+        if not parsed_pgn:
             return jsonify({"message": "Invalid PGN", "data": "Invalid PGN"}), 400
 
         try:
-            print(analyse(pgn))
+            analyse(parsed_pgn)
         except:
             return jsonify({"message": "Invalid PGN"}), 400
 
-        # # {'pgn': {'data': 'test'}}
-        # output = form_data["pgn"]["data"]
-        # print(output)
+        print("ORIGINAL: " + str(pgn))
+        print("ANALYZED: " + str(parsed_pgn))
 
-        return jsonify({"message": "Data received", "data": pgn})
+        return jsonify(
+            {"message": "Data received", "data": parsed_pgn, "original": pgn}
+        )
 
     return jsonify({"message": "No data received"}), 400
 
