@@ -18,14 +18,23 @@ This project is a web application intended to be used to analyze chess games tha
 
 1. HTML5/CSS3
 2. JavaScript
+   
     a. React + Vite
+
     b. Material UI
+
     c. `react-chessboard`
+   
     d. `chess.js`
-3. Python
+   
+4. Python
+
     a. Flask
+   
     b. `python-chess`
+   
     c. Stockfish
+   
     b. Baron 30 Opening Book
 
 
