@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import axios from 'axios';
 import GameDisplay from './GameDisplay';
+import Movebar from './Movebar'
 import { Chessboard } from 'react-chessboard';
 
 const VisuallyHiddenInput = styled('input')({
@@ -85,7 +86,9 @@ export default function InputFileUpload(handleFile) {
                 <div>
                     <h2>PGN:</h2>
                     {/* <pre>{JSON.stringify(originalPGN, null, 2)}</pre> */}
-                    <GameDisplay pgn={originalPGN} />
+                    <div class="analysis" style={{width: 300}}></div>
+                    <div class="analysis"><GameDisplay pgn={originalPGN} /></div>
+                    <div class="analysis"><Movebar data={originalPGN}/></div>
                 </div>
             )}
         </>
