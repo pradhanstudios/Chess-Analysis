@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template, request, url_for, redirect
 from flask_cors import CORS
-from logic.parse import parse_pgn
+from logic.parse import parse_pgn, remove_new_lines_pgn
 from logic.analyse import analyse
 
 app = Flask(__name__)
@@ -23,7 +23,7 @@ def form():
         form_data = request.get_json()
         # print(request.get_json())
         # Process or store form_data here
-        pgn = form_data["pgn"]["data"]
+        pgn = remove_new_lines_pgn(form_data["pgn"]["data"])
         parsed_pgn = parse_pgn(pgn)
         if not parsed_pgn:
             return jsonify({"message": "Invalid PGN", "data": "Invalid PGN"}), 400
@@ -54,13 +54,14 @@ def upload():
         if not filename.endswith(".pgn"):
             return jsonify({"message": "Not a PGN file"}), 400
 
-        pgn = "\n".join(form_data.split("\n")[4:-2])
+        pgn = remove_new_lines_pgn("\n".join(form_data.split("\n")[4:-2]))
         print("Starting analysis")
         parsed_pgn = parse_pgn(pgn)
         # print(pgn)
         try:
             analyse(parsed_pgn)
-        except:
+        except Exception as e:
+            print(e)
             return jsonify({"message": "Invalid PGN"}), 400
 
         return jsonify(

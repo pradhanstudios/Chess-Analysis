@@ -8,6 +8,11 @@ def _remove_non_letters(string: str) -> str:
     
     return output
 
+def remove_new_lines_pgn(pgn: str) -> str:
+    index = pgn.index("1. ")
+    return pgn[:index] + pgn[index:].replace("\n", " ")
+
+
 def parse_pgn(pgn: str) -> dict:
     pgn = pgn.split()
     parsed_pgn = dict()
