@@ -5,10 +5,13 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import LoadingBar from "react-top-loading-bar";
 import axios from 'axios';
+import GameDisplay from './GameDisplay'
+import Movebar from './Movebar'
 
 export default function MultilineTextFields() {
   const [formData, setFormData] = useState('');
   const [receivedData, setReceivedData] = useState(null);
+  const [originalPGN, setOriginalPGN] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -29,6 +32,7 @@ export default function MultilineTextFields() {
 
     if (response.ok && data.data) {
       setReceivedData(data.data);
+      setOriginalPGN(data.original);
     } else {
       setReceivedData({ message: data.message || "Error submitting data" });
     }
@@ -68,6 +72,15 @@ export default function MultilineTextFields() {
           <h2>Received Data:</h2>
           <pre>{JSON.stringify(receivedData, null, 2)}</pre>
         </div>
+      )}
+      {originalPGN && (
+          <div>
+              <h2>PGN:</h2>
+              {/* <pre>{JSON.stringify(originalPGN, null, 2)}</pre> */}
+              <div class="analysis" style={{width: 300}}></div>
+              <div class="analysis"><GameDisplay pgn={originalPGN} /></div>
+              <div class="analysis"><Movebar data={originalPGN}/></div>
+          </div>
       )}
     </Box>
   );

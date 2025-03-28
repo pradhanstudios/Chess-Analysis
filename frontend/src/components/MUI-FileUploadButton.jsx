@@ -5,6 +5,9 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import LoadingBar from "react-top-loading-bar";
 import axios from 'axios';
+import GameDisplay from './GameDisplay';
+import Movebar from './Movebar'
+import { Chessboard } from 'react-chessboard';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -22,6 +25,7 @@ const VisuallyHiddenInput = styled('input')({
 export default function InputFileUpload(handleFile) {
     const [file, setFile] = useState(null);
     const [receivedData, setReceivedData] = useState(null);
+    const [originalPGN, setOriginalPGN] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const handleChange = (event) => {
@@ -42,6 +46,7 @@ export default function InputFileUpload(handleFile) {
 
         if (response.ok && data.data) {
             setReceivedData(data.data);
+            setOriginalPGN(data.original);
         } else {
             setReceivedData({ message: data.message || "Error submitting data" });
         }
@@ -88,6 +93,15 @@ export default function InputFileUpload(handleFile) {
                 <div>
                     <h2>Received Data:</h2>
                     <pre>{JSON.stringify(receivedData, null, 2)}</pre>
+                </div>
+            )}
+            {originalPGN && (
+                <div>
+                    <h2>PGN:</h2>
+                    {/* <pre>{JSON.stringify(originalPGN, null, 2)}</pre> */}
+                    <div class="analysis" style={{width: 300}}></div>
+                    <div class="analysis"><GameDisplay pgn={originalPGN} /></div>
+                    <div class="analysis"><Movebar data={originalPGN}/></div>
                 </div>
             )}
         </>
